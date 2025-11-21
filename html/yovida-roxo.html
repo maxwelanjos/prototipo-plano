@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YoVida | Roxo</title>
+  <!--
+    VERSAO 2: YoVida Roxo/Turquesa
+    Cores baseadas na logo roxa com pessoa e coracao turquesa
+    Para trocar a marca para Vire+, altere os textos .brand-name
+  -->
+  <style>
+    /* --------- VARIAVEIS E RESET --------- */
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    :root {
+      /* Paleta YoVida Roxo - baseada na logo roxa/turquesa */
+      --bg: #0f0a1a;
+      --card: #1a1028;
+      --glass: rgba(255, 255, 255, 0.04);
+      --primary: #7c3aed;
+      --primary-dark: #6d28d9;
+      --accent: #00d4aa;
+      --text: #f3e8ff;
+      --muted: #c4b5d5;
+      --gradient: linear-gradient(135deg, #7c3aed, #a78bfa, #00d4aa);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.12), transparent 25%),
+                  radial-gradient(circle at 80% 20%, rgba(0, 212, 170, 0.08), transparent 25%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+
+    /* --------- LAYOUT GLOBAL --------- */
+    .container {
+      width: min(1200px, 90vw);
+      margin: 0 auto;
+      padding: 80px 0;
+    }
+    section { position: relative; }
+    h1, h2, h3, h4 { margin: 0 0 12px 0; color: #f4f7ff; letter-spacing: -0.02em; }
+    p { margin: 0 0 10px 0; }
+
+    /* --------- HEADER --------- */
+    header {
+      position: sticky;
+      top: 0; z-index: 20;
+      backdrop-filter: blur(8px);
+      background: rgba(15, 10, 26, 0.75);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav {
+      width: min(1200px, 90vw);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 0;
+    }
+    .logo { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.01em; }
+    .logo-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-symbol {
+      width: 32px;
+      height: 32px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: white;
+    }
+    nav ul { list-style: none; display: flex; gap: 18px; margin: 0; padding: 0; }
+    nav li { font-weight: 500; color: var(--muted); }
+    nav li a:hover { color: var(--primary); }
+    .cta {
+      background: var(--gradient);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .cta:hover { transform: translateY(-1px); box-shadow: 0 24px 40px rgba(124, 58, 237, 0.35); }
+    .cta.secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    /* --------- HERO --------- */
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+      gap: 32px;
+      padding: 120px 0 40px 0;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, 0.15);
+      color: #a78bfa;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); }
+    .hero p { color: var(--muted); font-size: 1.05rem; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    .mock {
+      position: relative;
+      height: 380px;
+      border-radius: 24px;
+      background: linear-gradient(160deg, rgba(124,58,237,0.2), rgba(0,212,170,0.15));
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.35);
+    }
+    .mock::after, .mock::before {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      filter: blur(18px);
+    }
+    .mock::after { width: 180px; height: 180px; top: -30px; right: -20px; }
+    .mock::before { width: 220px; height: 220px; bottom: -60px; left: -50px; }
+    .mock-tiles {
+      position: absolute;
+      inset: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(60px, 1fr);
+      gap: 14px;
+    }
+    .tile {
+      border-radius: 14px;
+      background: rgba(15,10,26,0.32);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* --------- SECAO COMO FUNCIONA --------- */
+    .section-title {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.9rem;
+      color: #a78bfa;
+      margin-bottom: 4px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .card {
+      background: linear-gradient(150deg, rgba(255,255,255,0.02), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .icon-badge {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      background: rgba(124,58,237,0.2);
+      color: #a78bfa;
+      margin-bottom: 12px;
+    }
+    .muted { color: var(--muted); }
+
+    /* --------- SECAO PLANOS --------- */
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .plan-card {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+    }
+    .plan-card.highlight {
+      border: 1px solid rgba(124,58,237,0.5);
+      box-shadow: 0 24px 50px rgba(124,58,237,0.35);
+    }
+    .plan-price { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+    .plan-tag {
+      position: absolute; top: 14px; right: 14px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(124,58,237,0.2);
+      color: #e0d4ff;
+      font-weight: 700; font-size: 0.85rem;
+    }
+    .benefits { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 8px; color: var(--muted); }
+    .benefits li::before { content: "✓ "; color: var(--accent); }
+
+    /* --------- FRAME DO APP --------- */
+    .app-area {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .app-copy { max-width: 520px; }
+
+    /* Container do celular com aspecto realista */
+    .phone {
+      width: 320px;
+      margin: 0 auto;
+      border-radius: 45px;
+      padding: 12px;
+      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      border: 3px solid #333;
+      box-shadow: 0 50px 100px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1), 0 0 0 2px #111;
+      position: relative;
+    }
+    .phone::before {
+      content: "";
+      position: absolute;
+      right: -6px;
+      top: 100px;
+      width: 4px;
+      height: 35px;
+      background: #333;
+      border-radius: 0 4px 4px 0;
+    }
+    .phone::after {
+      content: "";
+      position: absolute;
+      right: -6px;
+      top: 150px;
+      width: 4px;
+      height: 60px;
+      background: #333;
+      border-radius: 0 4px 4px 0;
+    }
+    .phone-screen {
+      background: #000;
+      border-radius: 35px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 640px;
+      position: relative;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: #000;
+      border-radius: 0 0 18px 18px;
+      z-index: 100;
+    }
+    .phone-notch::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background: #1a1a1a;
+      border-radius: 50%;
+      box-shadow: 30px 0 0 3px #1a1a1a;
+    }
+    .phone-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px 8px 20px;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: transparent;
+      position: relative;
+      z-index: 50;
+    }
+    .status-time { font-weight: 700; }
+    .status-icons { display: flex; gap: 6px; align-items: center; }
+    .status-icons span { font-size: 0.7rem; }
+    .app-nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 8px;
+      background: rgba(0,0,0,0.95);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 0.65rem;
+      font-weight: 500;
+    }
+    .nav-item:hover { color: var(--primary); }
+    .nav-item.active { color: var(--primary); }
+    .nav-item .nav-icon { font-size: 1.2rem; line-height: 1; }
+    .app-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 20px 16px 80px 16px;
+      background: radial-gradient(circle at 20% 0%, rgba(124,58,237,0.1), transparent 50%), linear-gradient(180deg, #0f0a1a 0%, #080510 100%);
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    .app-content::-webkit-scrollbar { width: 3px; }
+    .app-content::-webkit-scrollbar-track { background: transparent; }
+    .app-content::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 3px; }
+    .view { display: none; animation: fadeIn 0.3s ease; }
+    .view.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 4px;
+      z-index: 101;
+    }
+    .field { display: grid; gap: 8px; margin-bottom: 12px; }
+    .field label { color: var(--muted); font-size: 0.9rem; }
+    .field input, .field select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--gradient);
+      color: white;
+      transition: transform 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .link { color: var(--accent); cursor: pointer; font-weight: 600; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .pill-action {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      text-align: center;
+      font-weight: 600;
+    }
+    .status { font-size: 0.85rem; color: #7cffd8; background: rgba(0,212,170,0.15); padding: 6px 10px; border-radius: 10px; display: inline-block; }
+    .medidor {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      height: 12px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .medidor::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      width: 68%;
+    }
+    .list { display: grid; gap: 12px; margin-top: 12px; }
+    .list-item {
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .points {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .tag {
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .tag.done { background: rgba(0,212,170,0.16); color: #c8ffe4; }
+    .tag.progress { background: rgba(124,58,237,0.2); color: #e0d4ff; }
+
+    /* --------- FAQ --------- */
+    .faq { width: min(900px, 100%); margin: 0 auto; display: grid; gap: 12px; }
+    .faq-item { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
+    .faq-question {
+      padding: 14px 16px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .faq-answer { padding: 0 16px 14px 16px; display: none; color: var(--muted); }
+    .faq-item.active .faq-answer { display: block; }
+    .faq-item.active .faq-question { color: var(--accent); }
+
+    /* --------- FOOTER --------- */
+    footer {
+      background: #080510;
+      padding: 30px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-content {
+      width: min(1200px, 90vw);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .footer-links { display: flex; gap: 14px; }
+    .social { display: flex; gap: 10px; }
+    .social span {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* --------- RESPONSIVIDADE --------- */
+    @media (max-width: 900px) {
+      .app-area { grid-template-columns: 1fr; }
+      .container { padding: 70px 0; }
+      nav ul { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <span class="logo-icon">
+          <span class="logo-symbol">Y</span>
+          <span class="brand-name">YoVida</span>
+        </span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#app">App</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="cta secondary" href="#planos">Entrar</a>
+        <a class="cta" href="#planos">Quero meu plano</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- LANDING / HERO -->
+    <section id="inicio" class="container">
+      <div class="hero">
+        <div>
+          <div class="pill">Plano digital - 16+ - Low cost</div>
+          <h1>Seu primeiro plano de saude, do seu jeito com a <span class="brand-name">YoVida</span></h1>
+          <p>Cuide da mente e do corpo com psicologo, psiquiatra, nutricionista e clinico geral, em um app pensado para quem esta comecando a vida adulta.</p>
+          <div class="hero-actions">
+            <a class="cta" href="#planos">Simular plano</a>
+            <a class="cta secondary" href="#app">Baixar app</a>
+          </div>
+        </div>
+        <div class="mock" aria-hidden="true">
+          <div class="mock-tiles">
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section id="como-funciona" class="container">
+      <div class="section-title">Como funciona</div>
+      <h2>Comecar e simples: 4 passos e voce ja esta coberto</h2>
+      <div class="steps">
+        <div class="card">
+          <div class="icon-badge">1</div>
+          <h4>Faca seu cadastro</h4>
+          <p class="muted">Crie sua conta com dados basicos. Sem burocracia ou renda minima.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge">2</div>
+          <h4>Escolha seu plano</h4>
+          <p class="muted">Bronze, Prata ou Ouro. Todos digitais, acessiveis e com foco preventivo.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge">3</div>
+          <h4>Use o app</h4>
+          <p class="muted">Telemedicina, consultas e trilhas de saude em qualquer lugar do Brasil.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge">4</div>
+          <h4>Ganha pontos</h4>
+          <p class="muted">Complete desafios de prevencao, acumule pontos e troque por beneficios.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANOS -->
+    <section id="planos" class="container">
+      <div class="section-title">Planos</div>
+      <h2>Tres niveis, um mesmo cuidado digital</h2>
+      <div class="plans">
+        <div class="card plan-card">
+          <span class="plan-tag">Essencial</span>
+          <h3>Bronze <span class="brand-name">YoVida</span></h3>
+          <p class="plan-price">a partir de R$ 39/mes</p>
+          <ul class="benefits">
+            <li>Telemedicina 24h</li>
+            <li>Consultas em Psicologia (2/mes)</li>
+            <li>Triagem preventiva digital</li>
+          </ul>
+          <button class="cta btn" style="width:100%;">Escolher plano</button>
+        </div>
+        <div class="card plan-card highlight">
+          <span class="plan-tag">Mais escolhido</span>
+          <h3>Prata <span class="brand-name">YoVida</span></h3>
+          <p class="plan-price">a partir de R$ 59/mes</p>
+          <ul class="benefits">
+            <li>Telemedicina 24h + fila rapida</li>
+            <li>Psicologo e Psiquiatra (4/mes)</li>
+            <li>Nutricionista com plano mensal</li>
+            <li>Carteirinha digital + pontos extra</li>
+          </ul>
+          <button class="cta btn" style="width:100%;">Escolher plano</button>
+        </div>
+        <div class="card plan-card">
+          <span class="plan-tag">Completo</span>
+          <h3>Ouro <span class="brand-name">YoVida</span></h3>
+          <p class="plan-price">a partir de R$ 89/mes</p>
+          <ul class="benefits">
+            <li>Consultas ilimitadas em telemedicina</li>
+            <li>Equipe preventiva dedicada</li>
+            <li>Reembolso de bem-estar (simulado)</li>
+            <li>Gamificacao com recompensas premium</li>
+          </ul>
+          <button class="cta btn" style="width:100%;">Escolher plano</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP (SIMULACAO) -->
+    <section id="app" class="container">
+      <div class="section-title">App</div>
+      <h2>Experimente a jornada no app <span class="brand-name">YoVida</span> (simulacao)</h2>
+      <div class="app-area">
+        <div class="app-copy">
+          <p class="muted">Navegue entre telas dentro do mock de celular. Tudo e estatico, mas mostra como o fluxo de login, onboarding, painel, consultas e pontos funcionaria.</p>
+          <div style="margin-top:12px; display:grid; gap:10px;">
+            <div class="pill-action">App-first para jovens de 16+ com precos baixos</div>
+            <div class="pill-action">Foco em prevencao e saude mental</div>
+            <div class="pill-action">Pontos por checkups e desafios semanais</div>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-status">
+              <span class="status-time">09:41</span>
+              <div class="status-icons">
+                <span>●●●●</span>
+                <span>WiFi</span>
+                <span>84%</span>
+              </div>
+            </div>
+            <div class="app-content">
+              <!-- Tela Login / Cadastro -->
+              <div class="view active" id="login">
+                <h3>Entre na <span class="brand-name">YoVida</span></h3>
+                <p class="muted">Acesso rapido e seguro.</p>
+                <div id="login-form">
+                  <div class="field">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="voce@email.com">
+                  </div>
+                  <div class="field">
+                    <label>Senha</label>
+                    <input type="password" placeholder="********">
+                  </div>
+                  <button class="btn">Entrar</button>
+                  <p class="muted" style="margin-top:8px;">Novo por aqui? <span class="link" id="go-register">Criar conta</span></p>
+                </div>
+                <div id="register-form" style="display:none;">
+                  <div class="field">
+                    <label>Nome</label>
+                    <input type="text" placeholder="Ana Souza">
+                  </div>
+                  <div class="field grid-2">
+                    <div>
+                      <label>Idade</label>
+                      <input type="number" placeholder="18">
+                    </div>
+                    <div>
+                      <label>Cidade</label>
+                      <input type="text" placeholder="Sao Paulo">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="seu@email.com">
+                  </div>
+                  <button class="btn">Criar conta</button>
+                  <p class="muted" style="margin-top:8px;">Ja tem conta? <span class="link" id="go-login">Voltar para login</span></p>
+                </div>
+              </div>
+
+              <!-- Tela Onboarding -->
+              <div class="view" id="onboarding">
+                <h3>Bem-vindo(a) a <span class="brand-name">YoVida</span></h3>
+                <p class="muted">Roteiro rapido para conhecer a proposta.</p>
+                <ul class="benefits" style="margin-top:14px;">
+                  <li>Prevencao primeiro: checkups e trilhas guiadas</li>
+                  <li>Preco baixo: planos digitais para renda zero ou baixa</li>
+                  <li>Acesso digital: consultas e telemedicina pelo app</li>
+                </ul>
+                <button class="btn" style="margin-top:10px;">Ir para meu painel</button>
+              </div>
+
+              <!-- Dashboard -->
+              <div class="view" id="dashboard">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <h3>Oi, Jade!</h3>
+                    <span class="status">Plano Prata ativo</span>
+                  </div>
+                  <div class="tag progress">Saude em dia</div>
+                </div>
+                <div class="grid-2" style="margin:14px 0;">
+                  <div class="pill-action">Telemedicina agora</div>
+                  <div class="pill-action">Marcar consulta</div>
+                  <div class="pill-action">Carteirinha digital</div>
+                  <div class="pill-action">Meus pontos</div>
+                </div>
+                <div class="card" style="margin-top:8px;">
+                  <div style="display:flex; justify-content:space-between;">
+                    <div>
+                      <h4>Proxima consulta</h4>
+                      <p class="muted" style="margin:0;">Nutricionista - 14/12 - 19h</p>
+                    </div>
+                    <div class="tag done">Confirmada</div>
+                  </div>
+                  <p class="muted">Link de teleconsulta sera liberado 10 min antes.</p>
+                </div>
+                <div class="card" style="margin-top:12px;">
+                  <h4>Saude preventiva</h4>
+                  <p class="muted">Seu progresso semanal de habitos saudaveis</p>
+                  <div class="medidor"></div>
+                </div>
+              </div>
+
+              <!-- Telemedicina -->
+              <div class="view" id="telemedicina">
+                <h3>Telemedicina</h3>
+                <p class="muted">Escolha a especialidade e veja horarios.</p>
+                <div class="list">
+                  <div class="list-item">
+                    <div>
+                      <strong>Psicologo</strong>
+                      <p class="muted" style="margin:0;">Sessoes breves e acolhimento</p>
+                    </div>
+                    <button class="cta secondary" style="padding:8px 12px;">Ver horarios</button>
+                  </div>
+                  <div class="list-item">
+                    <div>
+                      <strong>Psiquiatra</strong>
+                      <p class="muted" style="margin:0;">Avaliacao e acompanhamento</p>
+                    </div>
+                    <button class="cta secondary" style="padding:8px 12px;">Ver horarios</button>
+                  </div>
+                  <div class="list-item">
+                    <div>
+                      <strong>Nutricionista</strong>
+                      <p class="muted" style="margin:0;">Plano alimentar personalizado</p>
+                    </div>
+                    <button class="cta secondary" style="padding:8px 12px;">Ver horarios</button>
+                  </div>
+                  <div class="list-item">
+                    <div>
+                      <strong>Clinico Geral</strong>
+                      <p class="muted" style="margin:0;">Atendimento rapido e triagem</p>
+                    </div>
+                    <button class="cta secondary" style="padding:8px 12px;">Ver horarios</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gamificacao / Pontos -->
+              <div class="view" id="pontos">
+                <h3>Gamificacao</h3>
+                <p class="muted">Cuide de voce e acumule pontos para recompensas.</p>
+                <div class="card" style="margin:12px 0;">
+                  <p class="muted" style="margin:0;">Voce tem</p>
+                  <div class="points">350 pontos</div>
+                  <p class="muted" style="margin:4px 0 0 0;">Complete missoes preventivas e ganhe bonus.</p>
+                </div>
+                <div class="list">
+                  <div class="list-item">
+                    <div>
+                      <strong>Completar checkup anual</strong>
+                      <p class="muted" style="margin:0;">+80 pts</p>
+                    </div>
+                    <span class="tag done">Concluida</span>
+                  </div>
+                  <div class="list-item">
+                    <div>
+                      <strong>Sessao de psicologo 1x/mes</strong>
+                      <p class="muted" style="margin:0;">+50 pts</p>
+                    </div>
+                    <span class="tag progress">Em progresso</span>
+                  </div>
+                  <div class="list-item">
+                    <div>
+                      <strong>Beber 2L de agua por 7 dias</strong>
+                      <p class="muted" style="margin:0;">+30 pts</p>
+                    </div>
+                    <span class="tag progress">Em progresso</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Perfil -->
+              <div class="view" id="perfil">
+                <h3>Perfil e configuracoes</h3>
+                <div class="list">
+                  <div class="list-item">
+                    <div>
+                      <strong>Jade Alves - 19 anos</strong>
+                      <p class="muted" style="margin:0;">Fortaleza - CE</p>
+                    </div>
+                  </div>
+                  <div class="list-item"><span>Alterar plano</span><span class="tag progress">Bronze/Prata/Ouro</span></div>
+                  <div class="list-item"><span>Dados de pagamento</span><span class="tag">Atualizar</span></div>
+                  <div class="list-item"><span>Privacidade & LGPD</span><span class="tag">Ver opcoes</span></div>
+                  <div class="list-item"><span>Sair</span><span class="tag">Logout</span></div>
+                </div>
+              </div>
+            </div>
+            <nav class="app-nav">
+              <button class="nav-item active" data-target="login"><span class="nav-icon">👤</span><span>Login</span></button>
+              <button class="nav-item" data-target="dashboard"><span class="nav-icon">🏠</span><span>Inicio</span></button>
+              <button class="nav-item" data-target="telemedicina"><span class="nav-icon">🩺</span><span>Saude</span></button>
+              <button class="nav-item" data-target="pontos"><span class="nav-icon">⭐</span><span>Pontos</span></button>
+              <button class="nav-item" data-target="perfil"><span class="nav-icon">⚙️</span><span>Perfil</span></button>
+            </nav>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="container">
+      <div class="section-title">FAQ</div>
+      <h2>Duvidas frequentes</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-question">Preciso ter emprego formal para contratar? <span>+</span></div>
+          <div class="faq-answer">Nao. A <span class="brand-name">YoVida</span> e pensada para jovens de renda baixa ou zero, sem exigencia de vinculo formal. Basta um documento e um meio de pagamento simples (boleto ou cartao pre-pago).</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Posso usar em qualquer lugar do Brasil? <span>+</span></div>
+          <div class="faq-answer">Sim, o atendimento digital funciona em todo o territorio nacional. Alguns servicos presenciais podem comecar em piloto regional, mas telemedicina e ampla.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Quais especialidades estao inclusas? <span>+</span></div>
+          <div class="faq-answer">Psicologo, Psiquiatra, Nutricionista e Clinico Geral sao os focos iniciais. Outras especialidades podem ser adicionadas conforme a expansao.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Como funcionam os pontos? <span>+</span></div>
+          <div class="faq-answer">Voce ganha pontos ao completar checkups, consultas e desafios de habitos. Eles podem ser trocados por beneficios, descontos ou upgrades dentro da plataforma.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div><span class="brand-name">YoVida</span> - Plataforma digital de saude preventiva</div>
+      <div class="footer-links">
+        <a href="#">Termos de Uso</a>
+        <a href="#">Politica de Privacidade</a>
+        <a href="#">Contato</a>
+      </div>
+      <div class="social">
+        <span>IG</span><span>TT</span><span>LN</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS minimo para navegacao simulada -->
+  <script>
+    const navItems = document.querySelectorAll('.nav-item');
+    const views = document.querySelectorAll('.view');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(n => n.classList.remove('active'));
+        views.forEach(v => v.classList.remove('active'));
+        item.classList.add('active');
+        const target = document.getElementById(item.dataset.target);
+        if (target) {
+          target.classList.add('active');
+          document.querySelector('.app-content').scrollTop = 0;
+        }
+      });
+    });
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    document.getElementById('go-register').addEventListener('click', () => {
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'block';
+    });
+    document.getElementById('go-login').addEventListener('click', () => {
+      registerForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    });
+    document.querySelectorAll('.btn').forEach(btn => {
+      if (btn.textContent.includes('Entrar') || btn.textContent.includes('Criar conta') || btn.textContent.includes('painel')) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          navItems.forEach(n => n.classList.remove('active'));
+          views.forEach(v => v.classList.remove('active'));
+          const dashNav = document.querySelector('[data-target="dashboard"]');
+          dashNav.classList.add('active');
+          document.getElementById('dashboard').classList.add('active');
+          document.querySelector('.app-content').scrollTop = 0;
+        });
+      }
+    });
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.parentElement.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>

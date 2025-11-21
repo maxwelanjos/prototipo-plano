@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototipos | Escolha seu modelo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+      min-height: 100vh;
+      color: #fff;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #00c9a7, #7c3aed, #ff7a59);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 50px;
+      font-size: 1.1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-color);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .card-preview {
+      height: 160px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-1 {
+      --card-color: #00c9a7;
+    }
+    .card-1 .card-preview {
+      background: linear-gradient(135deg, rgba(0,201,167,0.3), rgba(0,212,170,0.2));
+    }
+
+    .card-2 {
+      --card-color: #7c3aed;
+    }
+    .card-2 .card-preview {
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(0,212,170,0.15));
+    }
+
+    .card-3 {
+      --card-color: #ff6b9d;
+    }
+    .card-3 .card-preview {
+      background: linear-gradient(135deg, rgba(125,211,192,0.2), rgba(255,153,86,0.2), rgba(255,107,157,0.3));
+    }
+
+    .card-4 {
+      --card-color: #ff7a59;
+    }
+    .card-4 .card-preview {
+      background: linear-gradient(135deg, rgba(255,122,89,0.3), rgba(109,75,255,0.2));
+    }
+
+    .card-preview::after {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 2px dashed rgba(255,255,255,0.1);
+      border-radius: 8px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.3rem;
+      color: var(--card-color);
+    }
+
+    .card p {
+      margin: 0;
+      color: #888;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .card-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--card-color);
+      color: var(--card-color);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #555;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Prototipos de Plano de Saude Digital</h1>
+    <p class="subtitle">Escolha uma versao para visualizar o prototipo completo</p>
+
+    <div class="grid">
+      <a href="yovida-turquesa.html" class="card card-1">
+        <div class="card-preview"></div>
+        <span class="card-tag">YoVida</span>
+        <h3>Turquesa / Verde</h3>
+        <p>Paleta clean com tons de turquesa e verde agua. Visual fresco e moderno.</p>
+      </a>
+
+      <a href="yovida-roxo.html" class="card card-2">
+        <div class="card-preview"></div>
+        <span class="card-tag">YoVida</span>
+        <h3>Roxo / Turquesa</h3>
+        <p>Combinacao de roxo vibrante com detalhes em turquesa. Elegante e jovem.</p>
+      </a>
+
+      <a href="virei-multicolor.html" class="card card-3">
+        <div class="card-preview"></div>
+        <span class="card-tag">Vire+</span>
+        <h3>Multicolorido</h3>
+        <p>Gradiente colorido do verde ao roxo. Energico e diversificado.</p>
+      </a>
+
+      <a href="virei-laranja.html" class="card card-4">
+        <div class="card-preview"></div>
+        <span class="card-tag">Vire+</span>
+        <h3>Laranja / Roxo</h3>
+        <p>Laranja quente com toques de roxo. Dinamico e acolhedor.</p>
+      </a>
+    </div>
+
+    <div class="footer">
+      <p>Prototipos nao funcionais - Apenas para visualizacao</p>
+    </div>
+  </div>
+</body>
+</html>
